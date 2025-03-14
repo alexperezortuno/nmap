@@ -53,12 +53,9 @@ while true; do
   echo "5) Complete scan"
   echo "6) UDP protocol scan"
   echo "7) Get IP by domain"
-  echo "8) DNS brute interact with external resources to gather information about the target"
-  echo "9) IP geolocation interact with external resources to gather information about the target"
-  echo "10) SMTP brute may cause harm to the target system (e.g., crashes or disruptions). Use with caution"
-  echo "11) this category identify malware infections or behavior"
-  echo "12) WHOIS Domain Safe script are non-intrusive and unlikely to cause any harm to the target system"
-  echo "13) Exit"
+  echo "8) Execute scripts (https://nmap.org/nsedoc/scripts/)"
+  echo "9) Execute custom flags"
+  echo "10) Exit"
   echo -e "${endColour}" &&
   read -p "Select an option: " option
   case ${option} in
@@ -107,34 +104,18 @@ while true; do
   8)
     clear
     read -p "Enter the IP or domain to scan: " ip
+    read -p "Enter the script to execute: " script
     logInfo "Scanning..."
-    nmap --script dns-brute "$ip"
+    nmap --script "$script" "$ip"
   ;;
   9)
     clear
     read -p "Enter the IP or domain to scan: " ip
+    read -p "Enter the flags to execute: " flags
     logInfo "Scanning..."
-    nmap --script /usr/share/nmap/scripts/ip-geolocation-geoplugin "$ip"
+    nmap "$flags" "$ip"
   ;;
   10)
-    clear
-    read -p "Enter the IP or domain to scan: " ip
-    logInfo "Scanning..."
-    nmap --script smtp-brute "$ip"
-  ;;
-  11)
-    clear
-    read -p "Enter the IP or domain to scan: " ip
-    logInfo "Scanning..."
-    nmap --script http-malware-host "$ip"
-  ;;
-  12)
-    clear
-    read -p "Enter the IP or domain to scan: " ip
-    logInfo "Scanning..."
-    nmap --script whois-domain "$ip"
-  ;;
-  13)
     logInfo "Exiting..."
     exit 0
   ;;
