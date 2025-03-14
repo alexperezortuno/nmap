@@ -3,13 +3,13 @@
 
 ## Build docker image
 ```shell
-docker build -t nmap-script:dev .
+docker build -t nmap-scanner:dev .
 ```
 
 ```shell
-docker run --rm --name nmap-script2 -it nmap-script:dev
+docker run --rm --name nmap-scanner -it nmap-scanner:dev
 ```
 
 ```shell
-docker stop nmap-script && docker rm -f nmap-script
+docker stop nmap-scanner && docker rm -f nmap-scanner
 ```
