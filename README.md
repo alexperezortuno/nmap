@@ -7,7 +7,7 @@ docker build -t nmap-script:dev .
 ```
 
 ```shell
-docker run --rm --name nmap-script -it nmap-script:dev
+docker run --rm --name nmap-script2 -it nmap-script:dev
 ```
 
 ```shell

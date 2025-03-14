@@ -18,6 +18,18 @@ function logError() {
   echo -e "\n$redColour[-]$endColour $1"
 }
 
+function logWarning() {
+  echo -e "\n$yellowColour[!]$endColour $1"
+}
+
+function readInput() {
+  read -p "$(echo -e "${blueColour}[?]${endColour} $1")" $2
+}
+
+function separator() {
+  echo -e "\n$grayColour======================================================$endColour\n"
+}
+
 function getIPByDomain() {
     domain=${1:-"example.com"}
     #logger -t "nmap-scan" "resolving IP $domain"
@@ -61,59 +73,68 @@ while true; do
   case ${option} in
   1)
     clear
-    read -p "Enter the IP or domain to scan: " ip
+    readInput "Enter the IP or domain to scan: " ip
     logInfo "Scanning..."
     nmap -p- --open --min-rate 5000 -T5 -sS -Pn -n -v "$ip" | grep -E "^[0-9]+\/[a-z]+\s+open\s+[a-z]+"
+    separator
   ;;
   2)
     clear
-    read -p "Enter the IP or domain to scan: " ip
+    readInput "Enter the IP or domain to scan: " ip
     logInfo "Scanning..."
     nmap -p- --open "$ip" | grep -E "^[0-9]+\/[a-z]+\s+open\s+[a-z]+"
+    separator
   ;;
   3)
     clear
-    read -p "Enter the IP or domain to scan: " ip
+    readInput "Enter the IP or domain to scan: " ip
     logInfo "Scanning..."
     nmap -p- -T2 -sS -Pn -f "$ip" | grep -E "^[0-9]+\/[a-z]+\s+open\s+[a-z]+"
+    separator
   ;;
   4)
     clear
-    read -p "Enter the IP or domain to scan: " ip
+    readInput "Enter the IP or domain to scan: " ip
     logInfo "Scanning..."
     nmap -sV -sC "$ip"
+    separator
   ;;
   5)
     clear
-    read -p "Enter the IP or domain to scan: " ip
+    readInput "Enter the IP or domain to scan: " ip
     logInfo "Scanning..."
     nmap -p- -sS -sV -sC --min-rate 5000 -n -Pn "$ip"
+    separator
   ;;
   6)
     clear
-    read -p "Enter the IP or domain to scan: " ip
+    readInput "Enter the IP or domain to scan: " ip
     logInfo "Scanning..."
     nmap -sU --top-ports 200 --min-rate=5000 -n -Pn "$ip"
+    separator
   ;;
   7)
     clear
-    read -p "Enter the domain to get the IP: " domain
+    readInput "Enter the domain to get the IP: " domain
     getIPByDomain "$domain"
     logInfo "The IP of $domain is $ip"
+    separator
   ;;
   8)
     clear
-    read -p "Enter the IP or domain to scan: " ip
-    read -p "Enter the script to execute: " script
+    readInput "Enter the IP or domain to scan: " ip
+    readInput "Enter the script to execute: " script
     logInfo "Scanning..."
     nmap --script "$script" "$ip"
+    separator
   ;;
   9)
     clear
-    read -p "Enter the IP or domain to scan: " ip
-    read -p "Enter the flags to execute: " flags
+    readInput "Enter the IP or domain to scan: " ip
+    readInput "Enter the flags to execute: " flags
     logInfo "Scanning..."
     nmap "$flags" "$ip"
+    separator
   ;;
   10)
     logInfo "Exiting..."
