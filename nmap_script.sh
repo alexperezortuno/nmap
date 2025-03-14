@@ -66,7 +66,7 @@ while true; do
   echo "6) UDP protocol scan"
   echo "7) Get IP by domain"
   echo "8) Execute scripts (https://nmap.org/nsedoc/scripts/)"
-  echo "9) Execute custom flags"
+  echo "9) Execute custom command"
   echo "10) Exit"
   echo -e "${endColour}" &&
   read -p "Select an option: " option
@@ -130,10 +130,9 @@ while true; do
   ;;
   9)
     clear
-    readInput "Enter the IP or domain to scan: " ip
-    readInput "Enter the flags to execute: " flags
+    readInput "Enter the custom command to execute: " flags
     logInfo "Scanning..."
-    nmap "$flags" "$ip"
+    nmap $flags
     separator
   ;;
   10)
